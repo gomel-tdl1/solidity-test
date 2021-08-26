@@ -74,7 +74,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.5.16;\r\n\r\nimport \"./zombiefactory.sol\";\r\n\r\ncontract KittyInterface {\r\n    function getKitty(uint256 _id) external view returns (\r\n        bool isGestating,\r\n        bool isReady,\r\n        uint256 cooldownIndex,\r\n        uint256 nextActionAt,\r\n        uint256 siringWithId,\r\n        uint256 birthTime,\r\n        uint256 matronId,\r\n        uint256 sireId,\r\n        uint256 generation,\r\n        uint256 genes\r\n    );\r\n}\r\n\r\ncontract ZombieFeeding is ZombieFactory {\r\n\r\n    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;\r\n    KittyInterface kittyContract = KittyInterface(ckAddress);\r\n\r\n    // Здесь измени значение функции:\r\n    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {\r\n        require(msg.sender == zombieToOwner[_zombieId]);\r\n        Zombie storage myZombie = zombies[_zombieId];\r\n        _targetDna = _targetDna % dnaModulus;\r\n        uint newDna = (myZombie.dna + _targetDna) / 2;\r\n        // А здесь добавь оператор «если»:\r\n        if (keccak256(abi.encode(_species)) == keccak256(abi.encode(\"kitty\"))) {\r\n            newDna = newDna - newDna % 100 + 99;\r\n        }\r\n        _createZombie(\"NoName\", newDna);\r\n    }\r\n\r\n    function feedOnKitty(uint _zombieId, uint _kittyId) public {\r\n        uint kittyDna;\r\n        (,,,,,,,,, kittyDna) = kittyContract.getKitty(_kittyId);\r\n        // Здесь измени вызов функции:\r\n        feedAndMultiply(_zombieId, kittyDna, \"kitty\");\r\n    }\r\n\r\n}\r\n",
-  "sourcePath": "E:\\Web\\solidity-tests\\contracts\\zombiefeeding.sol",
+  "sourcePath": "E:\\Web\\solidity-test\\contracts\\zombiefeeding.sol",
   "ast": {
     "absolutePath": "project:/contracts/zombiefeeding.sol",
     "exportedSymbols": {
@@ -3979,7 +3979,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.2",
-  "updatedAt": "2021-07-27T09:38:00.977Z",
+  "updatedAt": "2021-07-28T16:24:25.473Z",
   "devdoc": {
     "methods": {}
   },

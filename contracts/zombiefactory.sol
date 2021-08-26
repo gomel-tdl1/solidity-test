@@ -1,4 +1,5 @@
 pragma solidity ^0.5.16;
+import "./ownable.sol";
 
 contract ZombieFactory {
 
@@ -17,7 +18,7 @@ contract ZombieFactory {
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
-    function _createZombie(string memory _name, uint _dna) internal {
+    function _createZombie(string memory _name, uint _dna) internal onlyOwner {
         zombies.push(Zombie(_name, _dna));
         uint id = zombies.length - 1;
         zombieToOwner[id] = msg.sender;
